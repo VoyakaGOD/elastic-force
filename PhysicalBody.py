@@ -11,8 +11,8 @@ class PhysicalBody:
         self.position = position
         self.velocity = ZERO_VECTOR
 
-    def AddForce(self, force):
-        self.velocity += force * self.invMass
+    def AddForce(self, force, dt):
+        self.velocity += force * self.invMass * dt
 
     def Update(self, dt):
         self.position += self.velocity * dt
