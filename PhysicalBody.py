@@ -1,8 +1,5 @@
 import pygame as pg
-from constants import *
-
-def WorldToScreen(position):
-    return Vector2(165 + position.x, 165 - position.y)
+from coordSystems import *
 
 class PhysicalBody:
     def __init__(self, mass, position):

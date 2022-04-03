@@ -2,14 +2,14 @@ from Simulation import *
 
 class App:
     def __init__(self):
-        self.screen = pg.display.set_mode((330, 330))
+        self.screen = pg.display.set_mode((500, 500), pg.RESIZABLE)
         self.clock = pg.time.Clock()
         pg.display.set_caption('elastic force')
 
     def run(self):
         isRunning = True
         test = Simulation(10, 100)
-        test.AddBody(Vector2(30,30))
+        test.AddBody(Vector2(0,0))
         test.objects[0].fixed = True
         test.AddBody(Vector2(130,20))
         test.AddConnection(test.objects[0], test.objects[1])
@@ -18,6 +18,8 @@ class App:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     isRunning = False
+                if event.type == pg.VIDEORESIZE:
+                    UpdateScreenSizeInfo(event.w, event.h)
             self.clock.tick(60)
         pg.quit()
 
