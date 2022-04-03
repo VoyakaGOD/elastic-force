@@ -1,0 +1,12 @@
+from pygame import Vector2
+
+GRAVITY = Vector2(0, -9.81)
+OBJECT_COLOR = (255, 255, 255)
+FIXED_BODY_COLOR = (200, 0, 0)
+BACKGROUND_COLOR = (0, 0, 0)
+BODY_SIZE = 5
+PHYSICAL_CONNECTION_WIDTH = 3
+
+
+def ZERO_VECTOR():
+    return Vector2(0, 0)

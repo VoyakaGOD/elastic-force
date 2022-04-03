@@ -8,11 +8,13 @@ class App:
 
     def run(self):
         isRunning = True
-        test = Simulation(10, 10)
+        test = Simulation(10, 100)
         test.AddBody(Vector2(30,30))
+        test.objects[0].fixed = True
         test.AddBody(Vector2(130,20))
+        test.AddConnection(test.objects[0], test.objects[1])
         while isRunning:
-            test.UpdateAndDraw(1/60, self.screen)
+            test.UpdateAndDraw(0.1, self.screen)
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     isRunning = False

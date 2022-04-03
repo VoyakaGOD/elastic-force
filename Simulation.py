@@ -9,11 +9,11 @@ class Simulation:
     def AddBody(self, position):
         self.objects += [PhysicalBody(self.mass, position)]
         
-    def AddConnection(self, obj1, obj2):
-        pself.objects += [PhysicalConnection(obj1, obj2, self.rigidity)]
+    def AddConnection(self, body1, body2):
+        self.objects += [PhysicalConnection(body1, body2, self.rigidity)]
 
     def UpdateAndDraw(self, dt, screen):
-        screen.fill((0,0,0))
+        screen.fill(BACKGROUND_COLOR)
         for obj in self.objects:
             obj.Update(dt)
             obj.Draw(screen)

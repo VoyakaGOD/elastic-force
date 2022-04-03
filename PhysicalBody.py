@@ -1,23 +1,27 @@
 import pygame as pg
-from pygame import Vector2
+from constants import *
 
-GRAVITY = Vector2(0, -9.81)
-WHITE_COLOR = (255, 255, 255)
-ZERO_VECTOR = Vector2(0, 0)
-BODY_SIZE = 5
+def WorldToScreen(position):
+    return Vector2(165 + position.x, 165 - position.y)
 
 class PhysicalBody:
     def __init__(self, mass, position):
         self.invMass = 1 / mass
         self.position = position
-        self.velocity = ZERO_VECTOR
+        self.velocity = ZERO_VECTOR()
+        self.fixed = False
 
     def AddForce(self, force, dt):
         self.velocity += force * self.invMass * dt
 
     def Update(self, dt):
+        if self.fixed:
+            return
         self.position += self.velocity * dt
         self.AddForce(GRAVITY, dt)
 
     def Draw(self, screen):
-        pg.draw.circle(screen, WHITE_COLOR, self.position, BODY_SIZE)
+        color = OBJECT_COLOR
+        if self.fixed:
+            color = FIXED_BODY_COLOR
+        pg.draw.circle(screen, color, WorldToScreen(self.position), BODY_SIZE)
