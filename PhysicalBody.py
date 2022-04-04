@@ -22,3 +22,8 @@ class PhysicalBody:
         if self.fixed:
             color = FIXED_BODY_COLOR
         pg.draw.circle(screen, color, WorldToScreen(self.position), BODY_SIZE)
+
+    def ContainsPoint(self, point):
+        dx = self.position.x - point.x
+        dy = self.position.y - point.y
+        return dx*dx + dy*dy < BODY_SIZE*BODY_SIZE 

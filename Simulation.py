@@ -19,5 +19,8 @@ class Simulation:
             obj.Draw(screen)
         pg.display.update()
 
-    def GetObject(position):
+    def GetObject(self, position):
+        for obj in self.objects:
+            if obj.ContainsPoint(position):
+                return obj
         return None

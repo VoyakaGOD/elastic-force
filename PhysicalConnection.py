@@ -15,3 +15,11 @@ class PhysicalConnection:
 
     def Draw(self, screen):
         pg.draw.line(screen, OBJECT_COLOR, WorldToScreen(self.firstBody.position), WorldToScreen(self.secondBody.position), PHYSICAL_CONNECTION_WIDTH)
+
+    def ContainsPoint(self, point):
+        p1 = self.firstBody.position
+        p2 = self.secondBody.position
+        dx = p2.x - p1.x
+        dy = p2.y - p1.y
+        numerator = dy*point.x - dx*point.y + p2.x*p1.y - p1.x*p2.y
+        return numerator*numerator / (dx*dx + dy*dy) < PHYSICAL_CONNECTION_WIDTH
