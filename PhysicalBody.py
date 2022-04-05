@@ -15,7 +15,7 @@ class PhysicalBody:
         if self.fixed:
             return
         self.position += self.velocity * dt
-        self.AddForce(GRAVITY, dt)
+        self.velocity += GRAVITY * dt
 
     def Draw(self, screen):
         color = OBJECT_COLOR

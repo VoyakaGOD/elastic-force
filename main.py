@@ -9,6 +9,7 @@ class App:
         self.screen = pg.display.set_mode((DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT), pg.RESIZABLE)
         self.clock = pg.time.Clock()
         pg.display.set_caption('elastic force')
+        pg.display.set_icon(pg.image.load('icon.ico'))
 
     def run(self):
         isRunning = True
@@ -32,5 +33,10 @@ class App:
         pg.quit()
 
 if __name__ == '__main__':
-    app = App()
-    app.run()
+    try:
+        app = App()
+        app.run()
+    except Exception as e:
+        print("Exception:", e)
+        input()
+        

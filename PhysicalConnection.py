@@ -22,4 +22,4 @@ class PhysicalConnection:
         dx = p2.x - p1.x
         dy = p2.y - p1.y
         numerator = dy*point.x - dx*point.y + p2.x*p1.y - p1.x*p2.y
-        return numerator*numerator / (dx*dx + dy*dy) < PHYSICAL_CONNECTION_WIDTH
+        return numerator*numerator / (dx*dx + dy*dy) < 0.25*PHYSICAL_CONNECTION_WIDTH*PHYSICAL_CONNECTION_WIDTH

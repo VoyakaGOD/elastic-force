@@ -1,1 +1,1 @@
-It's just a simulation of elastic interaction. And also my try to use PyIntaller.
+It's just a simulation of elastic interaction. And also my try to use PyInstaller.
