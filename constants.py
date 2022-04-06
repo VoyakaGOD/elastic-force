@@ -1,5 +1,6 @@
 from pygame import Vector2
 
+FPS = 60
 DEFAULT_SCREEN_WIDTH = 500
 DEFAULT_SCREEN_HEIGHT = 500
 GRAVITY = Vector2(0, -9.81)

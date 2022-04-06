@@ -12,10 +12,13 @@ class Simulation:
     def AddConnection(self, body1, body2):
         self.objects += [PhysicalConnection(body1, body2, self.rigidity)]
 
-    def UpdateAndDraw(self, dt, screen):
-        screen.fill(BACKGROUND_COLOR)
+    def Update(self, dt):
         for obj in self.objects:
             obj.Update(dt)
+
+    def Draw(self, screen):
+        screen.fill(BACKGROUND_COLOR)
+        for obj in self.objects:
             obj.Draw(screen)
         pg.display.update()
 
