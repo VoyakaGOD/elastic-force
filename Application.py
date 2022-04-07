@@ -11,6 +11,7 @@ class Application:
         self.__iterationsCount = 1
         self.__isPaused = False
         self.__selectedBody = None
+        self.__draggedBody = None
 
     def Start(self):
         mass = float(input("Enter mass of bodies:"))
@@ -33,13 +34,12 @@ class Application:
         if event.type == pg.MOUSEBUTTONDOWN:
             obj = self.simulation.GetObject(GetMouseWorldPosition())
             if isinstance(obj, PhysicalBody):
-                if self.__selectedBody == None:
-                    self.__selectedBody = obj
-                elif self.__selectedBody != obj:
-                    self.simulation.AddConnection(self.__selectedBody, obj)
-                    self.__selectedBody = None
-            else:
-                self.__selectedBody = None
+                self.__draggedBody = obj
+
+        if event.type == pg.MOUSEBUTTONUP:
+            if self.__draggedBody != None:
+                self.__draggedBody.velocity = ZERO_VECTOR()
+            self.__draggedBody = None
                     
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_SPACE:
@@ -52,13 +52,22 @@ class Application:
                 self.simulation.AddBody(GetMouseWorldPosition())
             elif event.key == pg.K_d:
                 self.simulation.DeleteObject(GetMouseWorldPosition())
+            elif event.key == pg.K_s:
+                obj = self.simulation.GetObject(GetMouseWorldPosition())
+                if isinstance(obj, PhysicalBody):
+                    if (self.__selectedBody != None) and (self.__selectedBody != obj):
+                        self.simulation.AddConnection(self.__selectedBody, obj)
+                    self.__selectedBody = obj
+                else:
+                    self.__selectedBody = None
 
     def Update(self):
-        if self.__isPaused:
-            return
-        for t in range(self.__iterationsCount):
-            self.simulation.Update(self.__dt)
-        self.simulation.DeleteUnnecessary()
+        if not self.__isPaused:
+            for t in range(self.__iterationsCount):
+                self.simulation.Update(self.__dt)
+            self.simulation.DeleteUnnecessary()
+        if self.__draggedBody != None:
+            self.__draggedBody.position = GetMouseWorldPosition()
 
     def Draw(self, screen):
         self.simulation.Draw(screen)
