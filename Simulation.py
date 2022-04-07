@@ -27,3 +27,27 @@ class Simulation:
             if obj.ContainsPoint(position):
                 return obj
         return None
+
+    def DeleteObject(self, position):
+        deletedObject = None
+        for obj in self.objects:
+            if obj.ContainsPoint(position):
+                deletedObject = obj
+                break
+        if isinstance(deletedObject, PhysicalBody):
+            for i in range(len(self.objects) - 1, -1, -1):
+                if isinstance(self.objects[i], PhysicalConnection) and self.objects[i].DependsOn(deletedObject):
+                    del self.objects[i]
+        if deletedObject != None:
+            self.objects.remove(deletedObject)
+
+    def DeleteUnnecessary(self):
+        sqrLimit = POSITION_LIMIT*POSITION_LIMIT
+        for i in range(len(self.objects) - 1, -1, -1):
+            if isinstance(self.objects[i], PhysicalBody):
+                if self.objects[i].position.length_squared() > sqrLimit:
+                    del self.objects[i]
+            elif (self.objects[i].firstBody.position.length_squared() > sqrLimit) or (self.objects[i].secondBody.position.length_squared() > sqrLimit):
+                del self.objects[i]
+                
+        

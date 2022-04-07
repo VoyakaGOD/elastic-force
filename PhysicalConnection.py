@@ -17,9 +17,15 @@ class PhysicalConnection:
         pg.draw.line(screen, OBJECT_COLOR, WorldToScreen(self.firstBody.position), WorldToScreen(self.secondBody.position), PHYSICAL_CONNECTION_WIDTH)
 
     def ContainsPoint(self, point):
+        halfWidth = 0.5*PHYSICAL_CONNECTION_WIDTH
         p1 = self.firstBody.position
         p2 = self.secondBody.position
         dx = p2.x - p1.x
         dy = p2.y - p1.y
         numerator = dy*point.x - dx*point.y + p2.x*p1.y - p1.x*p2.y
-        return numerator*numerator / (dx*dx + dy*dy) < 0.25*PHYSICAL_CONNECTION_WIDTH*PHYSICAL_CONNECTION_WIDTH
+        if numerator*numerator / (dx*dx + dy*dy) < halfWidth*halfWidth:
+            return ((min(p1.x,p2.x) - halfWidth) < point.x) and ((max(p1.x,p2.x) + halfWidth) > point.x) and ((min(p1.y,p2.y) - halfWidth) < point.y) and ((max(p1.y,p2.y) + halfWidth) > point.y)
+        return False
+
+    def DependsOn(self, body):
+        return (self.firstBody == body) or (self.secondBody == body)
