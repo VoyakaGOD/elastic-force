@@ -29,3 +29,8 @@ class PhysicalConnection:
 
     def DependsOn(self, body):
         return (self.firstBody == body) or (self.secondBody == body)
+
+    def __eq__(self, other):
+        if not isinstance(other, PhysicalConnection):
+            return False
+        return ((self.firstBody == other.firstBody) and (self.secondBody == other.secondBody)) or ((self.firstBody == other.secondBody) and (self.secondBody == other.firstBody))

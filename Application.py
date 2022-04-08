@@ -21,8 +21,6 @@ class Application:
         self.__dt = (1/FPS)/simulationQuality
         self.__iterationsCount = simulationSpeed * simulationQuality
         self.simulation = Simulation(mass, rigidity)
-        
-        #test
         self.simulation.AddBody(Vector2(0,0))
         self.simulation.objects[0].IsFixed = True
         self.simulation.AddBody(Vector2(130,20))
@@ -52,6 +50,9 @@ class Application:
                 self.simulation.AddBody(GetMouseWorldPosition())
             elif event.key == pg.K_d:
                 self.simulation.DeleteObject(GetMouseWorldPosition())
+                self.__selectedBody = None
+            elif event.key == pg.K_r:
+                self.simulation.Clear()
             elif event.key == pg.K_s:
                 obj = self.simulation.GetObject(GetMouseWorldPosition())
                 if isinstance(obj, PhysicalBody):

@@ -10,7 +10,9 @@ class Simulation:
         self.objects += [PhysicalBody(self.mass, position)]
         
     def AddConnection(self, body1, body2):
-        self.objects += [PhysicalConnection(body1, body2, self.rigidity)]
+        connection = PhysicalConnection(body1, body2, self.rigidity)
+        if not connection in self.objects:
+            self.objects += [connection]
 
     def Update(self, dt):
         for obj in self.objects:
@@ -49,5 +51,7 @@ class Simulation:
                     del self.objects[i]
             elif (self.objects[i].firstBody.position.length_squared() > sqrLimit) or (self.objects[i].secondBody.position.length_squared() > sqrLimit):
                 del self.objects[i]
-                
+
+    def Clear(self):
+        self.objects = []
         
